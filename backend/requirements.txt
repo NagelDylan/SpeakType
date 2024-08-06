@@ -1,0 +1,6 @@
+Flask
+pyaudio
+SpeechRecognition
+pynput
+flask-cors
+moviepy
