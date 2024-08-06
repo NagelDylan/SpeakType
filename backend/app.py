@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from moviepy.editor import AudioFileClip
 import speech_recognition
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -16,9 +17,12 @@ def speech_to_text(filename):
     audio_clip.write_audiofile(output_path)
 
     audio_clip.close()
+    os.remove('./recording.webm')
 
     with speech_recognition.AudioFile("recording.wav") as source:
         audio_data = recognizer.record(source)
+
+    os.remove('./recording.wav')
 
     try:
         text = recognizer.recognize_google(audio_data)

@@ -13,7 +13,11 @@ const SetCapital = (paragraph) => {
   result += paragraph[0].toUpperCase();
 
   for (let i = 1; i < paragraph.length; i++) {
-    if (i < paragraph.length - 2 && paragraph[i] === "." && paragraph[i + 1] === " ") {
+    if (
+      i < paragraph.length - 2 &&
+      paragraph[i] === "." &&
+      paragraph[i + 1] === " "
+    ) {
       result += ". ";
       result += paragraph[i + 2].toUpperCase();
       i += 2;
@@ -54,7 +58,10 @@ const SpeechRecorder = () => {
         }}
       />
 
-      <div className="text-box">{speechText && <h2>{speechText}</h2>}</div>
+      <div className="export-box">
+        <h3>Analyzed text will go here:</h3>
+        <div className="text-box">{speechText && <h2>{speechText}</h2>}</div>
+      </div>
     </StyledContainer>
   );
 };
@@ -62,9 +69,9 @@ const SpeechRecorder = () => {
 export default SpeechRecorder;
 
 const StyledContainer = styled.div`
+  font-family: Roboto;
   h1 {
     margin: 0;
-    font-family: Roboto, sans-serif;
     font-weight: 900;
     letter-spacing: 2px;
     font-size: 40px;
@@ -72,10 +79,16 @@ const StyledContainer = styled.div`
   }
 
   h2 {
-    font-family: Roboto;
     font-weight: 500;
     font-size: 20px;
     margin: 0;
+  }
+
+  h3 {
+    font-size: 16px;
+    margin: 0;
+    margin-bottom: 10px;
+    margin-left: 3px;
   }
 
   .text-box {
@@ -84,6 +97,9 @@ const StyledContainer = styled.div`
     padding: 30px;
     border-radius: 10px;
     background: none;
+  }
+
+  .export-box {
   }
 
   display: flex;
