@@ -1,6 +1,7 @@
 import { AudioRecorder } from "react-audio-voice-recorder";
 import styled from "styled-components";
 import { useState } from "react";
+import copyIcon from "/copy-icon.svg";
 
 const SetPeriods = (paragraph) => {
   const paragraph1 = paragraph.replace(/ slash period/g, ".");
@@ -47,6 +48,26 @@ const SpeechRecorder = () => {
     setSpeechText(capitalData);
   };
 
+  const handleCopyClick = () => {
+    // Create a temporary textarea element to hold the text
+    const tempTextArea = document.createElement("textarea");
+    tempTextArea.value = speechText;
+
+    // Append the textarea to the body (it will not be visible)
+    document.body.appendChild(tempTextArea);
+
+    // Select the text in the textarea
+    tempTextArea.select();
+
+    // Copy the selected text to the clipboard
+    document.execCommand("copy");
+
+    // Remove the temporary textarea element
+    document.body.removeChild(tempTextArea);
+
+    alert("Text copied to clipboard!");
+  };
+
   return (
     <StyledContainer>
       <h1>Voice to Text Recorder</h1>
@@ -60,7 +81,14 @@ const SpeechRecorder = () => {
 
       <div className="export-box">
         <h3>Analyzed text will go here:</h3>
-        <div className="text-box">{speechText && <h2>{speechText}</h2>}</div>
+        <div className="text-box">
+          {speechText && <h2>{speechText}</h2>}
+          {speechText && speechText !== "Loading..." && (
+            <button onClick={handleCopyClick}>
+              <img src={copyIcon} alt="copy icon" />
+            </button>
+          )}
+        </div>
       </div>
     </StyledContainer>
   );
@@ -97,9 +125,23 @@ const StyledContainer = styled.div`
     padding: 30px;
     border-radius: 10px;
     background: none;
-  }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
 
-  .export-box {
+    button {
+      background: none;
+      border: none;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      img {
+        width: 48px;
+      }
+    }
   }
 
   display: flex;
